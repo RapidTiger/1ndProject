@@ -1,0 +1,225 @@
+drop table old_books cascade constraints;
+drop table new_books cascade constraints;
+drop table members cascade constraints;
+drop table buy_members cascade constraints;
+drop table sales_members cascade constraints;
+drop table sales_history cascade constraints;
+drop table buy_history cascade constraints;
+
+CREATE TABLE new_books (
+book_id varchar2(5),
+book_name varchar2(100),
+book_writer varchar2(50),
+book_px number(7),
+book_pubdate number(6),
+book_qnt number(5),
+book_ctg varchar2(30),
+book_sales number(10),
+CONSTRAINT	new_books_pk PRIMARY KEY(book_id)
+);
+
+CREATE TABLE old_books (
+book_id varchar2(5),
+book_rtg varchar2(3),
+book_name varchar2(100),
+book_writer varchar2(50),
+book_px number(7),
+book_qnt number(5),
+book_ctg varchar2(30),
+book_sales number(10),
+CONSTRAINT	old_books_pk PRIMARY KEY(book_id, book_rtg),
+CONSTRAINT	old_books_fk FOREIGN KEY (book_id) REFERENCES new_books(book_id)
+);
+
+CREATE TABLE members (
+member_id varchar2(10),
+member_pw varchar2(10),
+CONSTRAINT	members_pk PRIMARY KEY(member_id)
+);
+
+CREATE TABLE buy_members(
+member_id varchar2(10),
+member_name varchar2(15),
+member_address varchar2(30),
+member_phone varchar2(15),
+CONSTRAINT	buy_members_pk PRIMARY KEY(member_id),
+CONSTRAINT	buy_members_fk FOREIGN KEY (member_id) REFERENCES members(member_id)
+);
+
+CREATE TABLE sales_members(
+member_id varchar2(10),
+book_id varchar2(5),
+book_rtg varchar2(3),
+book_px number(7),
+CONSTRAINT	sales_members_pk PRIMARY KEY(member_id),
+CONSTRAINT	sales_members_fk FOREIGN KEY (member_id) REFERENCES members(member_id)
+);
+
+CREATE TABLE  sales_history(
+member_id varchar2(10),
+book_id varchar2(5),
+book_name varchar2(100),
+book_rtg varchar2(3),
+sales_qnt number(5),
+book_px number(7)
+);
+
+CREATE TABLE buy_history(
+member_id varchar2(10),
+book_id varchar2(5),
+book_name varchar2(100),
+book_rtg varchar2(3),
+book_px number(7)
+);
+
+INSERT INTO new_books
+VALUES('N001','달러구트 꿈 백화점','이미예',12420,200701,1,'소설',1020);
+
+INSERT INTO new_books
+VALUES('N002','보건교사 안은영','정세랑',12600,200901,1,'소설',931);
+
+INSERT INTO new_books
+VALUES('N003','별 뜨기에 관하여','이영도',12400,201001,1,'소설',876);
+
+INSERT INTO new_books
+VALUES('N004','얼마나 닮았는가','김보영',13320,201002,1,'소설',742);
+
+INSERT INTO new_books
+VALUES('N005','시선으로부터','정세랑',12500,200601,1,'소설',552);
+
+INSERT INTO new_books
+VALUES('N006','우리가 빛의 속도로 갈 수 없다면','김초엽',12600,190601,1,'소설',410);
+
+INSERT INTO new_books
+VALUES('N007','아몬드','손원평',10800,170301,1,'소설',340);
+
+INSERT INTO new_books
+VALUES('N008','연년세세','황정은',13050,200901,1,'소설',278);
+
+INSERT INTO new_books
+VALUES('N009','바이러스X','김진명',14220,201101,1,'소설',163);
+
+INSERT INTO new_books
+VALUES('N010','내일의 연인들','정영수',12150,201005,1,'소설',110);
+
+INSERT INTO new_books
+VALUES('C001','하루만 네가 되고 싶어_전권','삼',32400,201105,1,'만화',1223);
+
+INSERT INTO new_books
+VALUES('C002','원펀맨22','원',4500,201018,1,'만화',1049);
+
+INSERT INTO new_books
+VALUES('C003','지박소년 하나코 군','아이다이로',4950,201114,1,'만화',931);
+
+INSERT INTO new_books
+VALUES('C004','원피스97','오다이이치로',4500,200907,1,'만화',876);
+
+INSERT INTO new_books
+VALUES('C005','인소의 법칙_특별판','아현',22500,201103,1,'만화',734);
+
+INSERT INTO new_books
+VALUES('C006','극락왕생1','고사리박사',10800,201026,1,'만화',682);
+
+INSERT INTO new_books
+VALUES('C007','드래곤볼 슈퍼13','토리야마 아키라',4500,201009,1,'만화',535); 
+
+INSERT INTO new_books
+VALUES('C008','귀멸의 칼날20','코토케 코요하루',4500,200911,1,'만화',418);
+
+INSERT INTO new_books
+VALUES('C009','5등분의 신부','Negi Haruba',4500,200108,1,'만화',371);
+
+INSERT INTO new_books
+VALUES('C010','귀멸의 칼날_공식팬북','코토케 코요하루',8550,200924,1,'만화',229);
+
+INSERT INTO new_books
+VALUES('D001','나의 하루는 4시30분에 시작된다','김유진',13500,201002,1,'자기계발',930);
+
+INSERT INTO new_books
+VALUES('D002','폴리매스','아카스 아메드',16920,200914,1,'자기계발',842);
+
+INSERT INTO new_books
+VALUES('D003','습관의 디테일','BJ포그',14400,201021,1,'자기계발',713);
+
+INSERT INTO new_books
+VALUES('D004','뇌는 팩트에 끌리지 않는다','리 히틀리 카터',14220,201028,1,'자기계발',685);
+
+INSERT INTO new_books
+VALUES('D005','모두에게 사랑받을 필요는 없다','웨인 다이어',14400,201019,1,'자기계발',537);
+
+INSERT INTO new_books
+VALUES('D006','하버드 상위 1퍼센트의 비밀','정주영',14400,181017,1,'자기계발',492);
+
+INSERT INTO new_books
+VALUES('D007','끌리는 말투에는 비밀이 있다','장차오',14220,201110,1,'자기계발',320);
+
+INSERT INTO new_books
+VALUES('D008','데일 카네기 인간관계론','데일 카네기',10350,191007,1,'자기계발',246);
+
+INSERT INTO new_books
+VALUES('D009','김미경의 리부트','김미경',14400,200701,1,'자기계발',172);
+
+INSERT INTO new_books
+VALUES('D010','탄력적 습관','스티븐 기즈',13500,201012,1,'자기계발',120);
+
+INSERT INTO new_books
+VALUES('E001','이기적 유전자','리처드 도킨스',18000,181020,1,'교재',950);
+
+INSERT INTO new_books
+VALUES('E002','경제금융용어 700선','한국은행 편집부',8000,200818,1,'교재',868);
+
+INSERT INTO new_books
+VALUES('E003','영어전치사연구','이기동',18000,200518,1,'교재',741);
+
+INSERT INTO new_books
+VALUES('E004','2020 치과보험청구사 3급 실무이론','대한치과건강보험협회',26600,200228,1,'교재',652);
+
+INSERT INTO new_books
+VALUES('E005','이것이 취업을 위한 코딩 테스트다 with 파이썬','나동빈',30600,200805,1,'교재',537);
+
+INSERT INTO new_books
+VALUES('E006','2021 예선회계실무 기본서','강인옥',26000,201020,1,'교재',429);
+
+INSERT INTO new_books
+VALUES('E007','안전기반치료','Lisa M.Najavits',28000,170825,1,'교재',317);
+
+INSERT INTO new_books
+VALUES('E008','근골격 해부학','정진우',18000,180625,1,'교재',259);
+
+INSERT INTO new_books
+VALUES('E009','군주론','니콜로 마키아벨리',9000,150210,1,'교재',214);
+
+INSERT INTO new_books
+VALUES('E010','현대 심리치료와 상담 이론','권석만',22000,120830,1,'교재',184);
+
+INSERT INTO new_books
+VALUES('P001','말장난','유병재',14400,201028,1,'시',1258);
+
+INSERT INTO new_books
+VALUES('P002','마음챙김의 시','류시화',11700,200917,1,'시',1168);
+
+INSERT INTO new_books
+VALUES('P003','꽃을 보듯 너를 본다','나태주',9000,150620,1,'시',965);
+
+INSERT INTO new_books
+VALUES('P004','하와와, 너에게 꽃을 주려고','박진성',10080,181115,1,'시',786);
+
+INSERT INTO new_books
+VALUES('P005','이별이 오늘 만나자고 한다','이병률',9000,200901,1,'시',720);
+
+INSERT INTO new_books
+VALUES('P006','지금 알고 있는 걸 그때도 알았더라면','류시화',8100,141203,1,'시',654);
+
+INSERT INTO new_books
+VALUES('P007','시로 납치하다','류시화',11700,180108,1,'시',591);
+
+INSERT INTO new_books
+VALUES('P008','저녁의 아이들','박진성',3600,181115,1,'시',452);
+
+INSERT INTO new_books
+VALUES('P009','어쩌면 별들이 너의 슬픔을 가져갈지도 몰라','김용택',11520,150528,1,'시',390);
+
+INSERT INTO new_books
+VALUES('P010','너와 함께라면 인생도 여행이다','나태주',12150,200630,1,'시',274);
+
+
